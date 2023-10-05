@@ -1,26 +1,55 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
+import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
-  create(createProductInput: CreateProductInput) {
-    return 'This action adds a new product';
-  }
+  products: Product[] = [];
 
   findAll() {
-    return `This action returns all products`;
+    return this.products;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string) {
+    return this.products.find((product) => product.id === id);
   }
 
-  update(id: number, updateProductInput: UpdateProductInput) {
-    return `This action updates a #${id} product`;
+  create(createProductInput: CreateProductInput) {
+    const newProduct = {
+      id: `${this.products.length + 1}`,
+      ...createProductInput,
+    };
+
+    this.products.push(newProduct);
+
+    return newProduct;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  update(id: string, updateProductInput: UpdateProductInput) {
+    const productToUpdate = this.findOne(id);
+    const filteredProducts = this.products.filter(
+      (product) => product.id !== id,
+    );
+
+    const updatedProduct = {
+      ...productToUpdate,
+      ...updateProductInput,
+    };
+
+    this.products = [...filteredProducts, updatedProduct];
+
+    return updatedProduct;
+  }
+
+  remove(id: string) {
+    const productToDelete = this.findOne(id);
+    const filteredProducts = this.products.filter(
+      (product) => product.id !== id,
+    );
+
+    this.products = filteredProducts;
+
+    return productToDelete;
   }
 }
