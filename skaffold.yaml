@@ -1,0 +1,15 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: ecommerce-backend
+build:
+  artifacts: []
+manifests:
+  rawYaml:
+    - k8s/**/*.yaml
+portForward:
+  - resourceType: service
+    resourceName: postgres-service
+    namespace: default
+    port: 5432
+    localPort: 5432
