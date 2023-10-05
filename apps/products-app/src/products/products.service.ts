@@ -1,55 +1,33 @@
+import { PrismaService } from '@app/prisma';
 import { Injectable } from '@nestjs/common';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
-import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
-  products: Product[] = [];
+  constructor(private readonly prismaService: PrismaService) {}
 
   findAll() {
-    return this.products;
+    return this.prismaService.product.findMany();
   }
 
   findOne(id: string) {
-    return this.products.find((product) => product.id === id);
+    return this.prismaService.product.findUniqueOrThrow({ where: { id } });
   }
 
   create(createProductInput: CreateProductInput) {
-    const newProduct = {
-      id: `${this.products.length + 1}`,
-      ...createProductInput,
-    };
+    const data = createProductInput;
 
-    this.products.push(newProduct);
-
-    return newProduct;
+    return this.prismaService.product.create({ data });
   }
 
   update(id: string, updateProductInput: UpdateProductInput) {
-    const productToUpdate = this.findOne(id);
-    const filteredProducts = this.products.filter(
-      (product) => product.id !== id,
-    );
+    const data = updateProductInput;
 
-    const updatedProduct = {
-      ...productToUpdate,
-      ...updateProductInput,
-    };
-
-    this.products = [...filteredProducts, updatedProduct];
-
-    return updatedProduct;
+    return this.prismaService.product.update({ where: { id }, data });
   }
 
   remove(id: string) {
-    const productToDelete = this.findOne(id);
-    const filteredProducts = this.products.filter(
-      (product) => product.id !== id,
-    );
-
-    this.products = filteredProducts;
-
-    return productToDelete;
+    return this.prismaService.product.delete({ where: { id } });
   }
 }

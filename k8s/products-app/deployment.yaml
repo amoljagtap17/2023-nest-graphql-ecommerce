@@ -21,3 +21,9 @@ spec:
               cpu: '500m'
           ports:
             - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: database_url

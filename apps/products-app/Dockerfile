@@ -18,6 +18,8 @@ COPY ./tsconfig.json ./tsconfig.json
 COPY ./tsconfig.build.json ./tsconfig.build.json
 COPY ./nest-cli.json ./nest-cli.json
 
+COPY ./libs ./libs
+
 FROM builder as prod-build
 
 RUN npm run build products-app
