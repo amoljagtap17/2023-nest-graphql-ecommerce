@@ -3,7 +3,15 @@ kind: Config
 metadata:
   name: ecommerce-backend
 build:
-  artifacts: []
+  local:
+    push: false
+  artifacts:
+    - image: codewithajdotguru/products-app
+      context: .
+      docker:
+        dockerfile: apps/products-app/Dockerfile
+  tagPolicy:
+    gitCommit: {}
 manifests:
   rawYaml:
     - k8s/**/*.yaml
