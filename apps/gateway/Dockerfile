@@ -13,34 +13,28 @@ RUN npm install -g @nestjs/cli
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY ./package*.json ./
 
-# Copy the prisma directory
-COPY ./prisma ./prisma
-
-# Install dependencies and generate Prisma Client
-RUN npm install && npx prisma generate
+# Install dependencies
+RUN npm install
 
 # Bundle app source
-COPY ./apps/products-app ./apps/products-app
+COPY ./apps/gateway ./apps/gateway
 
 # If tsconfig.json is in the root of your monorepo and you're building an app from a sub-directory
 COPY ./tsconfig.json ./tsconfig.json
 COPY ./tsconfig.build.json ./tsconfig.build.json
 COPY ./nest-cli.json ./nest-cli.json
 
-# Map the libs directory since the apps might depend on it
-COPY ./libs ./libs
-
 #PROD MIDDLE STEP
 FROM builder as prod-build
 
-RUN npm run build products-app
+RUN npm run build gateway
 
 #PROD
 ENV NODE_ENV=production
 
 ENTRYPOINT ["node", "./main.js"]
 
-WORKDIR /usr/src/app/dist/apps/products-app
+WORKDIR /usr/src/app/dist/apps/gateway
 
 CMD [""]
 

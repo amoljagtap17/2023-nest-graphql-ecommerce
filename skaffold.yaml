@@ -6,6 +6,10 @@ build:
   local:
     push: false
   artifacts:
+    - image: codewithajdotguru/gateway
+      context: .
+      docker:
+        dockerfile: apps/gateway/Dockerfile
     - image: codewithajdotguru/products-app
       context: .
       docker:
