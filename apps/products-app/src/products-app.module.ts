@@ -6,6 +6,7 @@ import {
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ProductsModule } from './products/products.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductsModule } from './products/products.module';
       include: [ProductsModule],
     }),
     ProductsModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],

@@ -23,5 +23,6 @@ portForward:
   - resourceType: service
     resourceName: postgres-service
     namespace: default
+    address: localhost
     port: 5432
     localPort: 5432
