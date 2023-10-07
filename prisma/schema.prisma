@@ -10,11 +10,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  UPI
+  NET_BANKING
+  CASH_ON_DELIVERY
+}
+
 model Product {
-  id          String @id @default(uuid())
-  name        String
-  description String
-  price       Float
+  id            String         @id @default(uuid())
+  name          String         @unique
+  description   String?
+  price         Decimal
+  sku           String         @unique
+  imageURL      String?
+  stockQuantity Int
+  orders        OrderProduct[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   @@map("products")
+}
+
+model Order {
+  id              String         @id @default(uuid())
+  status          OrderStatus?   @default(PENDING)
+  totalAmount     Decimal
+  shippingAddress String
+  paymentMethod   PaymentMethod
+  products        OrderProduct[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([orderId, productId])
+  @@map("orders_products")
 }
