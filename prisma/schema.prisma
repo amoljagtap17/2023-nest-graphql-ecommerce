@@ -43,7 +43,7 @@ model Product {
 
 model Order {
   id              String         @id @default(uuid())
-  status          OrderStatus?   @default(PENDING)
+  status          OrderStatus    @default(PENDING)
   totalAmount     Decimal
   shippingAddress String
   paymentMethod   PaymentMethod

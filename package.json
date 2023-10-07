@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/gateway/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/gateway/test/jest-e2e.json",
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@apollo/federation": "^0.38.1",
@@ -82,5 +83,8 @@
     "moduleNameMapper": {
       "^@app/prisma(|/.*)$": "<rootDir>/libs/prisma/src/$1"
     }
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
