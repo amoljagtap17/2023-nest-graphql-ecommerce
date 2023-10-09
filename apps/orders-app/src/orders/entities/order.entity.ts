@@ -14,8 +14,11 @@ export class Order {
   @Field(() => ID, { description: 'id of the order' })
   id: string;
 
-  @Field(() => OrderStatus, { description: 'status of the order' })
-  status: OrderStatus;
+  @Field(() => OrderStatus, {
+    description: 'status of the order',
+    defaultValue: OrderStatus.PENDING,
+  })
+  status?: OrderStatus;
 
   @Field(() => Float, { description: 'total amount of the order' })
   totalAmount: number;
