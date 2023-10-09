@@ -36,6 +36,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/prisma/tsconfig.lib.json"
       }
+    },
+    "orders-app": {
+      "type": "application",
+      "root": "apps/orders-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/orders-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/orders-app/tsconfig.app.json"
+      }
     }
   }
 }
