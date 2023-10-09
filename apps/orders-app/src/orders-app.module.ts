@@ -19,7 +19,7 @@ import { OrdersModule } from './orders/orders.module';
       introspection: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      include: [HealthModule],
+      include: [OrdersModule],
     }),
     OrdersModule,
     HealthModule,
