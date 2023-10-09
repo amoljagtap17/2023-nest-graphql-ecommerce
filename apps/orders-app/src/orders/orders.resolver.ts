@@ -1,17 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { OrdersService } from './orders.service';
-import { Order } from './entities/order.entity';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
+import { Order } from './entities/order.entity';
+import { OrdersService } from './orders.service';
 
 @Resolver(() => Order)
 export class OrdersResolver {
   constructor(private readonly ordersService: OrdersService) {}
-
-  @Mutation(() => Order)
-  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
-    return this.ordersService.create(createOrderInput);
-  }
 
   @Query(() => [Order], { name: 'orders' })
   findAll() {
@@ -19,17 +14,25 @@ export class OrdersResolver {
   }
 
   @Query(() => Order, { name: 'order' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.ordersService.findOne(id);
   }
 
   @Mutation(() => Order)
-  updateOrder(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
-    return this.ordersService.update(updateOrderInput.id, updateOrderInput);
+  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
+    return this.ordersService.create(createOrderInput);
   }
 
   @Mutation(() => Order)
-  removeOrder(@Args('id', { type: () => Int }) id: number) {
+  updateOrder(
+    @Args('id', { type: () => ID }) id: string,
+    @Args('updateOrderInput') updateOrderInput: UpdateOrderInput,
+  ) {
+    return this.ordersService.update(id, updateOrderInput);
+  }
+
+  @Mutation(() => Order)
+  removeOrder(@Args('id', { type: () => ID }) id: string) {
     return this.ordersService.remove(id);
   }
 }
