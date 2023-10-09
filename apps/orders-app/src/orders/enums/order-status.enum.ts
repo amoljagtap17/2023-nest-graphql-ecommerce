@@ -1,5 +1,12 @@
 import { registerEnumType } from '@nestjs/graphql';
-import { OrderStatus } from '@prisma/client';
+
+export enum OrderStatus {
+  PENDING,
+  SHIPPED,
+  DELIVERED,
+  CANCELLED,
+  RETURNED,
+}
 
 registerEnumType(OrderStatus, {
   name: 'OrderStatus',

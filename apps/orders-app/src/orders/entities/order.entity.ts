@@ -1,5 +1,6 @@
 import { Directive, Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { OrderStatus, PaymentMethod } from '@prisma/client';
+import { OrderStatus } from '../enums/order-status.enum';
+import { PaymentMethod } from '../enums/payment-method.eum';
 
 @ObjectType({ description: 'order model' })
 @Directive('@key(fields: "id")')

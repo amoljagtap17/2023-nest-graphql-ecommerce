@@ -1,5 +1,12 @@
 import { registerEnumType } from '@nestjs/graphql';
-import { PaymentMethod } from '@prisma/client';
+
+export enum PaymentMethod {
+  CREDIT_CARD,
+  DEBIT_CARD,
+  UPI,
+  NET_BANKING,
+  CASH_ON_DELIVERY,
+}
 
 registerEnumType(PaymentMethod, {
   name: 'PaymentMethod',
