@@ -16,13 +16,26 @@ export class OrdersService {
   }
 
   create(createOrderInput: CreateOrderInput) {
-    const data = createOrderInput;
+    const { paymentMethod, shippingAddress, totalAmount, products } =
+      createOrderInput;
+
+    const data = {
+      paymentMethod,
+      shippingAddress,
+      totalAmount,
+      products: {
+        create: products,
+      },
+    };
 
     return this.prismaService.order.create({ data });
   }
 
   update(id: string, updateOrderInput: UpdateOrderInput) {
-    const data = updateOrderInput;
+    const { status, paymentMethod, shippingAddress, totalAmount } =
+      updateOrderInput;
+
+    const data = { status, paymentMethod, shippingAddress, totalAmount };
 
     return this.prismaService.order.update({ where: { id }, data });
   }
