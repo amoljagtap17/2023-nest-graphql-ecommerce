@@ -1,4 +1,11 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  ID,
+  Mutation,
+  Query,
+  ResolveReference,
+  Resolver,
+} from '@nestjs/graphql';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
 import { Order } from './entities/order.entity';
@@ -34,5 +41,10 @@ export class OrdersResolver {
   @Mutation(() => Order)
   removeOrder(@Args('id', { type: () => ID }) id: string) {
     return this.ordersService.remove(id);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: { __typename: string; id: string }): Order {
+    return this.ordersService.findOne(reference.id) as unknown as Order;
   }
 }
