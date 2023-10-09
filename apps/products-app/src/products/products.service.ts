@@ -32,7 +32,7 @@ export class ProductsService {
   }
 
   async getProductsForOrder(orderId: string) {
-    const data = this.prismaService.orderProduct.findMany({
+    const data = await this.prismaService.orderProduct.findMany({
       where: { orderId },
       include: { product: true },
     });
