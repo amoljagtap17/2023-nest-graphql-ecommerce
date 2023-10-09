@@ -1,6 +1,12 @@
-import { Directive, Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { OrderStatus } from '../enums/order-status.enum';
-import { PaymentMethod } from '../enums/payment-method.eum';
+import {
+  Directive,
+  Field,
+  Float,
+  ID,
+  ObjectType,
+  registerEnumType,
+} from '@nestjs/graphql';
+import { OrderStatus, PaymentMethod } from '@prisma/client';
 
 @ObjectType({ description: 'order model' })
 @Directive('@key(fields: "id")')
@@ -20,3 +26,47 @@ export class Order {
   @Field(() => PaymentMethod, { description: 'status of the order' })
   paymentMethod: PaymentMethod;
 }
+
+registerEnumType(OrderStatus, {
+  name: 'OrderStatus',
+  description: 'status of the order',
+  valuesMap: {
+    PENDING: {
+      description: 'order is pending',
+    },
+    SHIPPED: {
+      description: 'order is shipped',
+    },
+    DELIVERED: {
+      description: 'order is delivered',
+    },
+    CANCELLED: {
+      description: 'order is cancelled',
+    },
+    RETURNED: {
+      description: 'order is returned',
+    },
+  },
+});
+
+registerEnumType(PaymentMethod, {
+  name: 'PaymentMethod',
+  description: 'payment method of the order',
+  valuesMap: {
+    CREDIT_CARD: {
+      description: 'credit card',
+    },
+    DEBIT_CARD: {
+      description: 'debit card',
+    },
+    UPI: {
+      description: 'upi',
+    },
+    NET_BANKING: {
+      description: 'net banking',
+    },
+    CASH_ON_DELIVERY: {
+      description: 'cash on delivery',
+    },
+  },
+});
