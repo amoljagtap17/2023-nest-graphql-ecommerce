@@ -5,8 +5,8 @@ export class CreateProductInput {
   @Field({ description: 'name of the product' })
   name: string;
 
-  @Field({ description: 'description of the product' })
-  description: string;
+  @Field({ description: 'description of the product', nullable: true })
+  description?: string;
 
   @Field(() => Float, { description: 'price of the product' })
   price: number;
@@ -15,7 +15,7 @@ export class CreateProductInput {
   sku: string;
 
   @Field({ description: 'image url of the product', nullable: true })
-  imageURL: string;
+  imageURL?: string;
 
   @Field(() => Int, { description: 'stock quantity of the product' })
   stockQuantity: number;
