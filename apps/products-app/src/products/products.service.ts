@@ -31,10 +31,12 @@ export class ProductsService {
     return this.prismaService.product.delete({ where: { id } });
   }
 
-  getProductsForOrder(orderId: string) {
-    return this.prismaService.orderProduct.findMany({
+  async getProductsForOrder(orderId: string) {
+    const data = this.prismaService.orderProduct.findMany({
       where: { orderId },
       include: { product: true },
     });
+
+    return data;
   }
 }
