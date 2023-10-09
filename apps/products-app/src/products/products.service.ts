@@ -30,4 +30,11 @@ export class ProductsService {
   remove(id: string) {
     return this.prismaService.product.delete({ where: { id } });
   }
+
+  getProductsForOrder(orderId: string) {
+    return this.prismaService.orderProduct.findMany({
+      where: { orderId },
+      include: { product: true },
+    });
+  }
 }

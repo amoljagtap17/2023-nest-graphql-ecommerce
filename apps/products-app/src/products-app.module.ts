@@ -5,8 +5,9 @@ import {
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ProductsModule } from './products/products.module';
 import { HealthModule } from './health/health.module';
+import { Order } from './products/entities/order.entity';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -20,6 +21,9 @@ import { HealthModule } from './health/health.module';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       include: [ProductsModule],
+      buildSchemaOptions: {
+        orphanedTypes: [Order],
+      },
     }),
     ProductsModule,
     HealthModule,
