@@ -21,6 +21,10 @@ import { GraphQLModule } from '@nestjs/graphql';
               name: 'products',
               url: 'http://products-app-service:3000/graphql',
             },
+            {
+              name: 'orders',
+              url: 'http://orders-app-service:3000/graphql',
+            },
           ],
         }),
       },
