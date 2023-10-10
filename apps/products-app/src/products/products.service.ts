@@ -32,11 +32,17 @@ export class ProductsService {
   }
 
   async getProductsForOrder(orderId: string) {
-    const data = await this.prismaService.order.findUnique({
-      where: { id: orderId },
-      include: { products: true },
+    const data = await this.prismaService.orderProduct.findMany({
+      where: {
+        orderId,
+      },
+      select: {
+        product: true,
+      },
     });
 
-    return data.products;
+    const _data = data.map((item) => item.product);
+
+    return _data;
   }
 }
